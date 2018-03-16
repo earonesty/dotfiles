@@ -4,6 +4,7 @@ set tabstop=4 shiftwidth=4 expandtab
 set nu
 behave mswin
 set keymodel-=stopsel
+set clipboard=
 " switch to visual mode and extend selection upwards
 nmap <S-Up> <esc>v<Up>
 nmap <S-Down> <esc>v<Down>

@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+
+import base64, sys
+
+
+def main():
+    func = sys.argv[1]
+    args = sys.argv[2:]
+
+    print(globals()[func](*args))
+
+def b642hex(x):
+    b = base64.b64decode(bytes(x,"utf8"))
+    return b.hex()
+
+def b642int(x):
+    b = base64.b64decode(bytes(x,"utf8"))
+    return bytes2int(b)
+
+def int2b64(x):
+    b=int2bytes(int(x))
+    return bytes2b64(int2bytes(int(x)))
+
+def int2hex(x):
+    b=int2bytes(x)
+    return b.hex()
+
+def int2bytes(x):
+    return x.to_bytes((x.bit_length()+7)//8,"big")
+
+def bytes2b64(x):
+    return base64.b64encode(x).decode()
+
+def bytes2int(x):
+    return int.from_bytes(x, "big")
+
+def len(x):
+    return __builtins__.len(x)
+
+if __name__ == "__main__":
+    main()
