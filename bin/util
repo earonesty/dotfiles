@@ -2,40 +2,64 @@
 
 import base64, sys
 
+class Util:
+    @staticmethod
+    def b642hex(x):
+        b = base64.b64decode(bytes(x,"utf8"))
+        return b.hex()
 
+    @staticmethod
+    def b642int(x):
+        b = base64.b64decode(bytes(x,"utf8"))
+        return bytes2int(b)
+
+    @staticmethod
+    def int2b64(x):
+        b=int2bytes(int(x))
+        return bytes2b64(int2bytes(int(x)))
+
+    @staticmethod
+    def int2hex(x):
+        b=int2bytes(x)
+        return b.hex()
+
+    @staticmethod
+    def int2bytes(x):
+        return x.to_bytes((x.bit_length()+7)//8,"big")
+
+    @staticmethod
+    def bytes2b64(x):
+        return base64.b64encode(x).decode()
+
+    @staticmethod
+    def bytes2int(x):
+        return int.from_bytes(x, "big")
+
+    @staticmethod
+    def len(x):
+        return len(x)
+
+    @staticmethod
+    def help(*args):
+        funcs = sorted(k for k in dir(Util) if k[0] != '_')
+        funcs = ", ".join(funcs)
+
+        return f"""
+Usage: util <func> [args ...]
+
+Available Functions:
+
+    {funcs}
+"""
+    
 def main():
     func = sys.argv[1]
     args = sys.argv[2:]
 
-    print(globals()[func](*args))
+    meth = getattr(Util, func)
 
-def b642hex(x):
-    b = base64.b64decode(bytes(x,"utf8"))
-    return b.hex()
+    print(meth(*args))
 
-def b642int(x):
-    b = base64.b64decode(bytes(x,"utf8"))
-    return bytes2int(b)
-
-def int2b64(x):
-    b=int2bytes(int(x))
-    return bytes2b64(int2bytes(int(x)))
-
-def int2hex(x):
-    b=int2bytes(x)
-    return b.hex()
-
-def int2bytes(x):
-    return x.to_bytes((x.bit_length()+7)//8,"big")
-
-def bytes2b64(x):
-    return base64.b64encode(x).decode()
-
-def bytes2int(x):
-    return int.from_bytes(x, "big")
-
-def len(x):
-    return __builtins__.len(x)
 
 if __name__ == "__main__":
     main()
