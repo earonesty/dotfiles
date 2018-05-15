@@ -15,17 +15,27 @@ def encrypt_and_digest(pt, key):
     ct, mac = cipher.encrypt_and_digest(pt)
     return ct, cipher.nonce, mac
 
+cipher = None
 def encrypt(key, plaintext, associated_data):
+    global cipher
+
     # Generate a random 96-bit IV.
     iv = os.urandom(12)
 
     # Construct an AES-GCM Cipher object with the given key and a
     # randomly generated IV.
-    encryptor = Cipher(
-        algorithms.AES(key),
-        modes.GCM(iv),
-        backend=default_backend()
-    ).encryptor()
+    if not cipher:
+        print("HERE!")
+        cipher = Cipher(
+            algorithms.AES(key),
+            modes.GCM(iv),
+            backend=default_backend()
+        )
+    else:
+#        cipher.algorithm = algorithms.AES(key)
+        cipher.mode=modes.GCM(iv)
+
+    encryptor = cipher.encryptor()
 
     # associated_data will be authenticated but not encrypted,
     # it must also be passed in on decryption.
@@ -40,12 +50,19 @@ def encrypt(key, plaintext, associated_data):
 def decrypt(key, associated_data, iv, ciphertext, tag):
     # Construct a Cipher object, with the key, iv, and additionally the
     # GCM tag used for authenticating the message.
-    decryptor = Cipher(
-        algorithms.AES(key),
-        modes.GCM(iv, tag),
-        backend=default_backend()
-    ).decryptor()
+    global cipher
+    if not cipher:
+        print("HERE!")
+        cipher = Cipher(
+            algorithms.AES(key),
+            modes.GCM(iv, tag),
+            backend=default_backend()
+        )
+    else:
+#        cipher.algorithm = algorithms.AES(key)
+        cipher.mode=modes.GCM(iv, tag)
 
+    decryptor = cipher.decryptor()
     # We put associated_data back in or the tag will fail to verify
     # when we finalize the decryptor.
 #    decryptor.authenticate_additional_data(associated_data)
@@ -79,4 +96,4 @@ def crypto_version():
 
 
 print("openssl version", timeit.timeit('openssl_version()', number=10000, globals=globals()))
-print("pycrypto version", timeit.timeit('crypto_version()', number=10000, globals=globals()))
+#print("pycrypto version", timeit.timeit('crypto_version()', number=10000, globals=globals()))
