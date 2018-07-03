@@ -63,12 +63,9 @@ def delete_unused_groups(sgs):
         else:
             print(sg.group_id, sg.group_name, sg.dependents)
 
-def print_open_ports(sgs):
+def audit_open_ports(sgs):
     for sg in sgs.values():
-        if not sg.dependents and sg.name != 'default':
-            sg.delete()
-        else:
-            print(sg.group_id, sg.group_name, sg.dependents)
+        pass
 
 if __name__ == "__main__":
     main()
