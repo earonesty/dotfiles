@@ -1,0 +1,12 @@
+[user]
+    email = erik@q32.com
+[alias]
+    st = status
+    lg = log --graph --oneline --decorate
+    ci = commit -v
+    co = checkout
+    br = branch
+    sh = show
+[push]
+	default = current
+

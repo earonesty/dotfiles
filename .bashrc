@@ -4,4 +4,4 @@ export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:
 
 function hh() {
     grep "$1" ~/.bash.log
-}`
+}
