@@ -1,5 +1,6 @@
 [user]
-    email = erik@q32.com
+	email = erik@q32.com
+	name = erik aronesty
 [alias]
     st = status
     lg = log --graph --oneline --decorate
@@ -10,3 +11,6 @@
 [push]
 	default = current
 
+[core]
+	autocrlf = input
+	eol = lf
