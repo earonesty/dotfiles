@@ -1,0 +1,3 @@
+[submodule "git/license-server/Build-Tools"]
+	path = git/license-server/Build-Tools
+	url = git@gitlab.com:vidaid/Build-Tools.git
