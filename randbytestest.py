@@ -174,14 +174,14 @@ def buildstats(length, count, source, file=None):
 def z_to_pct(z_score):
     return 0.5 * (1+math.erf(z_score / 2 ** .5))
 
-def zptiles(summary, point):
+def zptiles(summary, point, n=1):
     tests = [k for k in point.keys() if k != 'count']
     r = {}
     for k in tests:
         val = point[k]
         stats = summary[k]
         if k != "count":
-            zscore = (val - stats["mean"])/stats["stddev"]
+            zscore = (val - stats["mean"])/(stats["stddev"]/math.sqrt(n))
             ptile = z_to_pct(-abs(zscore))
             r[k] = ptile
     return r
@@ -233,8 +233,8 @@ def randtestall(rand, points, pval):
             d[k] = len(v)
         d[k] = v.mean()
 
-    # test using means only
-    pct = zptiles(rand, d)
+    # test using means
+    pct = zptiles(rand, d, len(d))
     pval = pval
     bonf = len(pct)
     evidence = []
