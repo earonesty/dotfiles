@@ -40,6 +40,20 @@ class Util:
         return len(x)
 
     @staticmethod
+    def check_yaml(*args):
+        for arg in args:
+            import yaml
+            yaml.safe_load(open(arg)) 
+        return "OK"
+
+    @staticmethod
+    def check_json(*args):
+        for arg in args:
+            import json
+            json.load(open(arg)) 
+        return "OK"
+
+    @staticmethod
     def help(*args):
         funcs = sorted(k for k in dir(Util) if k[0] != '_')
         funcs = ", ".join(funcs)
@@ -56,10 +70,13 @@ def main():
     func = sys.argv[1]
     args = sys.argv[2:]
 
+    func = func.replace("-","_")
+
     meth = getattr(Util, func)
 
-    print(meth(*args))
-
+    ret = meth(*args)
+    if ret is not None:
+        print(ret)
 
 if __name__ == "__main__":
     main()

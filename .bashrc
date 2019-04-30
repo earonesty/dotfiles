@@ -15,3 +15,6 @@ alias python="winpty python"
 export VIDA_PIP_URL=https://artifacts.vidaprivacy.io/repository/vida-pi
 export VIDA_PIP_PASSWORD=YMqMb88vsDby86aq
 export VIDA_PIP_USER=vida
+
+# added by travis gem
+[ -f C:/Users/erik/.travis/travis.sh ] && source C:/Users/erik/.travis/travis.sh
