@@ -13,7 +13,6 @@ alias vi=vim
 alias python="winpty -Xallow-non-tty python"
 
 export VIDA_PIP_URL=https://artifacts.vidaprivacy.io/repository/vida-pi
-export VIDA_PIP_PASSWORD=YMqMb88vsDby86aq
 export VIDA_PIP_USER=vida
 
 # added by travis gem
